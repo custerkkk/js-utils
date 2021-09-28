@@ -1,0 +1,22 @@
+{
+  "name": "custer-js-utils",
+  "version": "1.0.0",
+  "description": "javascript some tools",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "release": "tsc && npm publish"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/custerkkk/js-utils.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/custerkkk/js-utils/issues"
+  },
+  "homepage": "https://github.com/custerkkk/js-utils#readme"
+}

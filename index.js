@@ -29,4 +29,66 @@ var js_utils;
         return fmt;
     }
     js_utils.dateFormat = dateFormat;
+    /**
+     * 获取UUID
+     */
+    function generateUUID() {
+        var d = new Date().getTime();
+        var uuid = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+            var r = (d + Math.random() * 16) % 16 | 0;
+            d = Math.floor(d / 16);
+            return (c == "x" ? r : (r & 0x3) | 0x8).toString(16);
+        });
+        return uuid;
+    }
+    js_utils.generateUUID = generateUUID;
+    /**
+     * 是否为移动设备
+     */
+    function isMobile() {
+        var flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i);
+        return flag;
+    }
+    js_utils.isMobile = isMobile;
+    /**
+     * 检测是否为json
+     * @param str
+     */
+    function isJsonString(str) {
+        try {
+            if (typeof JSON.parse(str) == "object") {
+                return true;
+            }
+        }
+        catch (e) {
+            console.log("not json");
+        }
+        return false;
+    }
+    js_utils.isJsonString = isJsonString;
+    /**
+     * json字符串转对象
+     * @param str
+     */
+    function jsonToObject(str) {
+        try {
+            var obj = eval("(" + str + ")");
+            return obj;
+        }
+        catch (e) {
+            return {};
+        }
+    }
+    js_utils.jsonToObject = jsonToObject;
+    /**
+     * 将对象或者字符串转换为json字符串
+     * @param value
+     */
+    function jsonStringify(value) {
+        if (typeof value == "string") {
+            return JSON.stringify(JSON.parse(value));
+        }
+        return JSON.stringify(value);
+    }
+    js_utils.jsonStringify = jsonStringify;
 })(js_utils = exports.js_utils || (exports.js_utils = {}));

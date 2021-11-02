@@ -25,6 +25,22 @@ export module js_utils {
     }
 
     /**
+     * 获取URL参数
+     * @param value
+     */
+     export function getQueryVariable(value: string): string | null {
+        const query = window.location.search.substring(1);
+        const vars = query.split("&");
+        for (const item of vars) {
+            const idx = item.search("=");
+            if (item.substring(0, idx) == value) {
+                return item.substr(idx + 1);
+            }
+        }
+        return null;
+    }
+
+    /**
      * 获取UUID
      */
     export function generateUUID() {

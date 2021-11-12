@@ -6,6 +6,17 @@ export declare module js_utils {
      */
     function dateFormat(d: Date, fmt: string): string;
     /**
+     * 获取URL参数
+     * @param value
+     */
+    function getQueryVariable(value: string): string | null;
+    /**
+     * 如果source和data中存在相同的key, 将data中的值复制到source
+     * @param source
+     * @param data
+     */
+    function assign(source: any, data: any): void;
+    /**
      * 获取UUID
      */
     function generateUUID(): string;

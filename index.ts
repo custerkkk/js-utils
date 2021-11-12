@@ -39,6 +39,17 @@ export module js_utils {
         }
         return null;
     }
+    /**
+     * 如果source和data中存在相同的key, 将data中的值复制到source
+     * @param source 
+     * @param data 
+     */
+    export function assign(source:any, data:any){
+        const keys = Object.keys(source);
+        for(const key of keys){
+            if(data[key]) source[key] = data[key];
+        }
+    }
 
     /**
      * 获取UUID

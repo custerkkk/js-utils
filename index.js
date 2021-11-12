@@ -30,6 +30,37 @@ var js_utils;
     }
     js_utils.dateFormat = dateFormat;
     /**
+     * 获取URL参数
+     * @param value
+     */
+    function getQueryVariable(value) {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var _i = 0, vars_1 = vars; _i < vars_1.length; _i++) {
+            var item = vars_1[_i];
+            var idx = item.search("=");
+            if (item.substring(0, idx) == value) {
+                return item.substr(idx + 1);
+            }
+        }
+        return null;
+    }
+    js_utils.getQueryVariable = getQueryVariable;
+    /**
+     * 如果source和data中存在相同的key, 将data中的值复制到source
+     * @param source
+     * @param data
+     */
+    function assign(source, data) {
+        var keys = Object.keys(source);
+        for (var _i = 0, keys_1 = keys; _i < keys_1.length; _i++) {
+            var key = keys_1[_i];
+            if (data[key])
+                source[key] = data[key];
+        }
+    }
+    js_utils.assign = assign;
+    /**
      * 获取UUID
      */
     function generateUUID() {

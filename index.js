@@ -55,7 +55,7 @@ var js_utils;
         var keys = Object.keys(source);
         for (var _i = 0, keys_1 = keys; _i < keys_1.length; _i++) {
             var key = keys_1[_i];
-            if (data[key])
+            if (data[key] || data[key] === 0)
                 source[key] = data[key];
         }
     }

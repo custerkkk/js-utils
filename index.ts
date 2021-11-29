@@ -47,7 +47,7 @@ export module js_utils {
     export function assign(source:any, data:any){
         const keys = Object.keys(source);
         for(const key of keys){
-            if(data[key]) source[key] = data[key];
+            if(data[key] || data[key] === 0) source[key] = data[key];
         }
     }
 

@@ -6,6 +6,10 @@ export declare module js_utils {
      */
     function dateFormat(d: Date, fmt: string): string;
     /**
+     * 转换成货币格式
+     */
+    function moneyFormat(s: any, symbol?: string): string;
+    /**
      * 获取URL参数
      * @param value
      */
@@ -39,4 +43,32 @@ export declare module js_utils {
      * @param value
      */
     function jsonStringify(value: any): string;
+    /**
+     * 将对象转换为Http请求的form表单数据
+     * @param obj
+     */
+    function getFormWithObject(obj: any, except?: string[]): FormData;
+    /**
+     * 去掉空属性/空符串，并返回一个新对象
+     */
+    function objectRemoveNull(obj: any, except?: any[]): any;
+    /**
+     * Check if an element has a class
+     * @param {HTMLElement} elm
+     * @param {string} cls
+     * @returns {boolean}
+     */
+    function hasClass(ele: HTMLElement, cls: string): boolean;
+    /**
+     * Add class to element
+     * @param {HTMLElement} elm
+     * @param {string} cls
+     */
+    function addClass(ele: HTMLElement, cls: string): void;
+    /**
+     * Remove class from element
+     * @param {HTMLElement} elm
+     * @param {string} cls
+     */
+    function removeClass(ele: HTMLElement, cls: string): void;
 }

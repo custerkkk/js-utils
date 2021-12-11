@@ -30,6 +30,26 @@ var js_utils;
     }
     js_utils.dateFormat = dateFormat;
     /**
+     * 转换成货币格式
+     */
+    function moneyFormat(s, symbol) {
+        if (symbol === void 0) { symbol = "¥"; }
+        if (!s)
+            s = 0;
+        s = s.toString();
+        if (/[^0-9.]/.test(s))
+            return "invalid value";
+        s = s.replace(/^(\d*)$/, "$1.");
+        s = (s + "00").replace(/(\d*\.\d\d)\d*/, "$1");
+        s = s.replace(".", ",");
+        var re = /(\d)(\d{3},)/;
+        while (re.test(s))
+            s = s.replace(re, "$1,$2");
+        s = s.replace(/,(\d\d)$/, ".$1");
+        return symbol + s.replace(/^\./, "0.");
+    }
+    js_utils.moneyFormat = moneyFormat;
+    /**
      * 获取URL参数
      * @param value
      */
@@ -122,4 +142,67 @@ var js_utils;
         return JSON.stringify(value);
     }
     js_utils.jsonStringify = jsonStringify;
+    /**
+     * 将对象转换为Http请求的form表单数据
+     * @param obj
+     */
+    function getFormWithObject(obj, except) {
+        if (except === void 0) { except = []; }
+        var fData = new FormData();
+        for (var _i = 0, _a = Object.keys(obj); _i < _a.length; _i++) {
+            var key = _a[_i];
+            if (!except.includes(key) && obj[key] !== undefined && obj[key] !== null) {
+                fData.append(key, obj[key]);
+            }
+        }
+        return fData;
+    }
+    js_utils.getFormWithObject = getFormWithObject;
+    /**
+     * 去掉空属性/空符串，并返回一个新对象
+     */
+    function objectRemoveNull(obj, except) {
+        if (except === void 0) { except = [undefined, null, ""]; }
+        var result = {};
+        for (var _i = 0, _a = Object.keys(obj); _i < _a.length; _i++) {
+            var c = _a[_i];
+            if (!except.includes(obj[c])) {
+                result[c] = obj[c];
+            }
+        }
+        return result;
+    }
+    js_utils.objectRemoveNull = objectRemoveNull;
+    /**
+     * Check if an element has a class
+     * @param {HTMLElement} elm
+     * @param {string} cls
+     * @returns {boolean}
+     */
+    function hasClass(ele, cls) {
+        return !!ele.className.match(new RegExp("(\\s|^)" + cls + "(\\s|$)"));
+    }
+    js_utils.hasClass = hasClass;
+    /**
+     * Add class to element
+     * @param {HTMLElement} elm
+     * @param {string} cls
+     */
+    function addClass(ele, cls) {
+        if (!hasClass(ele, cls))
+            ele.className += " " + cls;
+    }
+    js_utils.addClass = addClass;
+    /**
+     * Remove class from element
+     * @param {HTMLElement} elm
+     * @param {string} cls
+     */
+    function removeClass(ele, cls) {
+        if (hasClass(ele, cls)) {
+            var reg = new RegExp("(\\s|^)" + cls + "(\\s|$)");
+            ele.className = ele.className.replace(reg, " ");
+        }
+    }
+    js_utils.removeClass = removeClass;
 })(js_utils = exports.js_utils || (exports.js_utils = {}));

@@ -25,10 +25,26 @@ export module js_utils {
     }
 
     /**
+     * 转换成货币格式
+     */
+    export function moneyFormat(s: any, symbol: string = "¥"): string {
+        if (!s) s = 0;
+        s = s.toString();
+        if (/[^0-9.]/.test(s)) return "invalid value";
+        s = s.replace(/^(\d*)$/, "$1.");
+        s = (s + "00").replace(/(\d*\.\d\d)\d*/, "$1");
+        s = s.replace(".", ",");
+        const re = /(\d)(\d{3},)/;
+        while (re.test(s)) s = s.replace(re, "$1,$2");
+        s = s.replace(/,(\d\d)$/, ".$1");
+        return symbol + s.replace(/^\./, "0.");
+    }
+
+    /**
      * 获取URL参数
      * @param value
      */
-     export function getQueryVariable(value: string): string | null {
+    export function getQueryVariable(value: string): string | null {
         const query = window.location.search.substring(1);
         const vars = query.split("&");
         for (const item of vars) {
@@ -41,13 +57,13 @@ export module js_utils {
     }
     /**
      * 如果source和data中存在相同的key, 将data中的值复制到source
-     * @param source 
-     * @param data 
+     * @param source
+     * @param data
      */
-    export function assign(source:any, data:any){
+    export function assign(source: any, data: any) {
         const keys = Object.keys(source);
-        for(const key of keys){
-            if(data[key] || data[key] === 0) source[key] = data[key];
+        for (const key of keys) {
+            if (data[key] || data[key] === 0) source[key] = data[key];
         }
     }
 
@@ -109,5 +125,63 @@ export module js_utils {
             return JSON.stringify(JSON.parse(value));
         }
         return JSON.stringify(value);
+    }
+
+    /**
+     * 将对象转换为Http请求的form表单数据
+     * @param obj
+     */
+    export function getFormWithObject(obj: any, except: string[] = []) {
+        const fData = new FormData();
+        for (const key of Object.keys(obj)) {
+            if (!except.includes(key) && obj[key] !== undefined && obj[key] !== null) {
+                fData.append(key, obj[key]);
+            }
+        }
+        return fData;
+    }
+
+    /**
+     * 去掉空属性/空符串，并返回一个新对象
+     */
+    export function objectRemoveNull(obj: any, except: any[] = [undefined, null, ""]): any {
+        const result: any = {};
+        for (const c of Object.keys(obj)) {
+            if (!except.includes(obj[c])) {
+                result[c] = obj[c];
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Check if an element has a class
+     * @param {HTMLElement} elm
+     * @param {string} cls
+     * @returns {boolean}
+     */
+    export function hasClass(ele: HTMLElement, cls: string) {
+        return !!ele.className.match(new RegExp("(\\s|^)" + cls + "(\\s|$)"));
+    }
+
+    /**
+     * Add class to element
+     * @param {HTMLElement} elm
+     * @param {string} cls
+     */
+    export function addClass(ele: HTMLElement, cls: string) {
+        if (!hasClass(ele, cls)) ele.className += " " + cls;
+    }
+
+    /**
+     * Remove class from element
+     * @param {HTMLElement} elm
+     * @param {string} cls
+     */
+    export function removeClass(ele: HTMLElement, cls: string) {
+        if (hasClass(ele, cls)) {
+            const reg = new RegExp("(\\s|^)" + cls + "(\\s|$)");
+            ele.className = ele.className.replace(reg, " ");
+        }
     }
 }
